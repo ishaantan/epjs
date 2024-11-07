@@ -8,8 +8,12 @@ const path = require("path");
 const app = express();
 const route = require("./routes");
 const port = 3000;
+const db = require("./config/db");
 
-            app.use(express.static(path.join(__dirname, "public")));
+//connect to db
+db.connect();
+
+app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(morgan("combined"));
@@ -25,8 +29,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.set("view engine", "hbs");
-app.set("views", path.join(__dirname, "resources/views"));
+app.set("views", path.join(__dirname, "resources", "views"));
 route(app);
 app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`);
+  console.log(`Listening on port ${port}`);
 });
