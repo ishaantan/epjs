@@ -8,16 +8,27 @@ const path = require("path");
 const app = express();
 const route = require("./routes");
 const port = 3000;
+const methodOverride = require("method-override");
 const db = require("./config/db");
 
 //connect to db
 db.connect();
 
+//Middleware
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(morgan("combined"));
-app.engine("hbs", engine({ extname: ".hbs" }));
+app.use(methodOverride("_method"));
+app.engine(
+  "hbs",
+  engine({
+    extname: ".hbs",
+    helpers: {
+      sum: (a, b) => a + b,
+    },
+  }),
+);
 app.use(cookieParser());
 app.use(
   cors({

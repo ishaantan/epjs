@@ -1,0 +1,27 @@
+<div class="mt-4">
+    <h3>
+        update
+        <strong>
+            {{course.name}}
+        </strong>
+    </h3>
+    <form method="POST" action="/me/course/{{course._id}}?_method=PUT">
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Name</label>
+            <input type="text" class="form-control" id="name" name="name" value="{{course.name}}">
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Description</label>
+            <input type="text" class="form-control" id="description" name="description" value="{{course.description}}">
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">videoId</label>
+            <input type="text" class="form-control" id="videoId" name="videoId" value="{{course.videoId}}">
+        </div>
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Level</label>
+            <input type="text" class="form-control" id="level" name="level" value="{{course.level}}">
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>

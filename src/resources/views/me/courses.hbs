@@ -4,7 +4,7 @@
         <th scope="col">No</th>
         <th scope="col">Khoa Hoc</th>
         <th scope="col">Mo Ta</th>
-        <th scope="col">Link</th>
+        <th scope="col">Video ID</th>
         <th scope="col">Edit</th>
         <th scope="col">Remove</th>
     </tr>
@@ -12,13 +12,48 @@
     <tbody>
     {{#each courses}}
         <tr>
-            <th scope="row">1</th>
+            <th scope="row">{{sum @index 1}}</th>
             <td>{{name}}</td>
             <td>{{description}}</td>
-            <td>{{link}}</td>
-            <td>Edit</td>
-            <td>Remove</td>
+            <td>{{videoId}}</td>
+            <td><a href="course/{{_id}}/edit" class="btn btn-primary">Edit</a></td>
+            <td><button type="button" class="btn btn-primary" id="btn-delete-course" data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo" data-id={{_id}}>Delete</button></td>
         </tr>
     {{/each}}
     </tbody>
 </table>
+
+<!--modal remove-->
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">New message</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" id="confirmDeleteButton" class="btn btn-primary">Delete</button>
+            </div>
+        </div>
+    </div>
+</div>
+<form id="delete-course-form" method="POST" ></form>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var courseId;
+        var deleteForm = document.forms['delete-course-form'];
+        var deleteButtonConfirm = document.getElementById('confirmDeleteButton');
+        // When dialog confirm clicked
+        $('#exampleModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            courseId = button.data('id');
+        });
+
+        deleteButtonConfirm.onclick = function(){
+            deleteForm.action = '/me/course/' + courseId + '?_method=DELETE'
+            deleteForm.submit()
+        }
+    })
+</script>
